@@ -1,0 +1,122 @@
+[
+    {
+        "id": 1,
+        "image": "https://images.unsplash.com/photo-1504711434969-e33886168f5c",
+        "headline": "Tech Conference 2025 Highlights",
+        "shortDescription": "Key takeaways from the annual tech conference held in San Francisco.",
+        "categories": ["Technology", "Conference"],
+        "date": "2025-04-06T14:30:00Z"
+    },
+    {
+        "id": 2,
+        "image": "https://images.unsplash.com/photo-1516321497487-e288fb19713f",
+        "headline": "Health Benefits of Morning Exercise",
+        "shortDescription": "A new study reveals the advantages of exercising in the morning.",
+        "categories": ["Health", "Fitness"],
+        "date": "2025-04-05T08:00:00Z"
+    },
+    {
+        "id": 3,
+        "image": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f",
+        "headline": "Exploring the Alps: A Travel Guide",
+        "shortDescription": "Top destinations and tips for traveling through the Alps.",
+        "categories": ["Travel", "Adventure"],
+        "date": "2025-04-04T12:15:00Z"
+    },
+    {
+        "id": 4,
+        "image": "https://images.unsplash.com/photo-1556740749-887f6717d7e4",
+        "headline": "Innovations in Renewable Energy",
+        "shortDescription": "How new technologies are shaping the future of renewable energy.",
+        "categories": ["Technology", "Environment"],
+        "date": "2025-04-03T09:45:00Z"
+    },
+    {
+        "id": 5,
+        "image": "https://images.unsplash.com/photo-1475721027785-f74eccf877e2",
+        "headline": "Culinary Delights: Top 10 Restaurants in NYC",
+        "shortDescription": "A curated list of must-visit restaurants in New York City.",
+        "categories": ["Food", "Travel"],
+        "date": "2025-04-02T18:30:00Z"
+    },
+    {
+        "id": 6,
+        "image": "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
+        "headline": "AI in Everyday Life",
+        "shortDescription": "Exploring how artificial intelligence is integrated into daily activities.",
+        "categories": ["Technology", "AI"],
+        "date": "2025-04-01T11:00:00Z"
+    },
+    {
+        "id": 7,
+        "image": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4",
+        "headline": "The Rise of Remote Work",
+        "shortDescription": "Understanding the shift towards remote work and its implications.",
+        "categories": ["Business", "Lifestyle"],
+        "date": "2025-03-31T15:20:00Z"
+    },
+    {
+        "id": 8,
+        "image": "https://images.unsplash.com/photo-1504384308090-c894fdcc538d",
+        "headline": "Advancements in Space Exploration",
+        "shortDescription": "Recent breakthroughs in space technology and exploration missions.",
+        "categories": ["Science", "Space"],
+        "date": "2025-03-30T10:10:00Z"
+    },
+    {
+        "id": 9,
+        "image": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23",
+        "headline": "Understanding Climate Change",
+        "shortDescription": "An in-depth look at the causes and effects of climate change.",
+        "categories": ["Environment", "Science"],
+        "date": "2025-03-29T13:50:00Z"
+    },
+    {
+        "id": 10,
+        "image": "https://images.unsplash.com/photo-1519125323398-675f0ddb6308",
+        "headline": "Art Trends to Watch in 2025",
+        "shortDescription": "A glimpse into the emerging art trends of the year.",
+        "categories": ["Art", "Culture"],
+        "date": "2025-03-28T16:40:00Z"
+    },
+    {
+        "id": 11,
+        "image": "https://images.unsplash.com/photo-1521747116042-5a810fda9664",
+        "headline": "The Future of Electric Vehicles",
+        "shortDescription": "How electric vehicles are set to revolutionize transportation.",
+        "categories": ["Automotive", "Technology"],
+        "date": "2025-03-27T09:30:00Z"
+    },
+    {
+        "id": 12,
+        "image": "https://images.unsplash.com/photo-1522205408450-add114ad53fe",
+        "headline": "Mindfulness Techniques for Stress Relief",
+        "shortDescription": "Effective mindfulness practices to alleviate stress.",
+        "categories": ["Health", "Wellness"],
+        "date": "2025-03-26T14:25:00Z"
+    },
+    {
+        "id": 13,
+        "image": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3",
+        "headline": "Breakthroughs in Cancer Research",
+        "shortDescription": "New developments in the fight against cancer.",
+        "categories": ["Health", "Science"],
+        "date": "2025-03-25T11:15:00Z"
+    },
+    {
+        "id": 14,
+        "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30",
+        "headline": "The Art of Minimalist Living",
+        "shortDescription": "Tips and benefits of adopting a minimalist lifestyle.",
+        "categories": ["Lifestyle", "Wellness"],
+        "date": "2025-03-24T17:00:00Z"
+    },
+    {
+        "id": 15,
+        "image": "https://images.unsplash.com/photo-1522205408450-add114ad53fe",
+        "headline": "The Impact of Social Media on Society",
+        "shortDescription": "Analyzing the effects of social media on modern communication.",
+        "categories": ["Social Media", "Culture"],
+        "date": "2025-03-23T12:00:00Z"
+    }
+]
