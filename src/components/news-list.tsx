@@ -7,6 +7,7 @@ import { ChevronUp, ChevronDown, Filter, RefreshCcw } from "lucide-react";
 import { Badge } from "./ui/badge";
 import { Card, CardContent } from "./ui/card";
 import Image from "next/image";
+import { ThemeToggle } from "./theme-toggle";
 
 export type NewsItem = {
 	id: number;
@@ -111,33 +112,7 @@ export default function NewsListComponent() {
 
 	return (
 		<div className="space-y-6">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div className="flex items-center gap-2">
-          <Button variant="outline" onClick={toggleFilter} className="flex items-center gap-2">
-            <Filter className="h-4 w-4" />
-            Filter by Category
-            {isFilterOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-          </Button>
-          {selectedCategories.length > 0 && (
-            <Button variant="ghost" onClick={resetFilters} size="sm">
-              Clear filters
-            </Button>
-          )}
-        </div>
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={handleRefresh}
-            disabled={isRefreshing}
-            className={isRefreshing ? "animate-spin" : ""}
-            title="Refresh news"
-          >
-            <RefreshCcw className="h-4 w-4" />
-            <span className="sr-only">Refresh</span>
-          </Button>
-        </div>
-      </div>
+					<ThemeToggle />
 
       {isFilterOpen && (
         <div className="flex flex-wrap gap-2 p-4 bg-muted rounded-lg">
