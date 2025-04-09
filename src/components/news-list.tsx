@@ -2,6 +2,11 @@
 
 import { fetchNewsData } from "@/utils/api";
 import { useEffect, useState, useCallback } from "react";
+import { Button } from "./ui/button";
+import { ChevronUp, ChevronDown, Filter, RefreshCcw } from "lucide-react";
+import { Badge } from "./ui/badge";
+import { Card, CardContent } from "./ui/card";
+import Image from "next/image";
 
 export type NewsItem = {
 	id: number;
@@ -24,6 +29,10 @@ export default function NewsListComponent() {
 
 	//State to store any error messages
 	const [error, setError] = useState<string | null>(null);
+
+	const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+	const [allCategories, setAllCategories] = useState<string[]>([]);
+	const [isFilterOpen, setIsFilterOpen] = useState(false);
 
 	//Function to fetch news data
 	//Using useCallback to memoize the function and prevent unnecessary re-renders
@@ -57,12 +66,13 @@ export default function NewsListComponent() {
 						categories.add(category)
 					);
 				});
+				setAllCategories(Array.from(categories).sort());
 			} catch (err) {
-        //Handling errors
+				//Handling errors
 				setError("Failed to load news data. Please try again later.");
 				console.error(err);
 			} finally {
-        //Reset loading states
+				//Reset loading states
 				setIsLoading(false);
 				setIsRefreshing(false);
 			}
@@ -75,18 +85,117 @@ export default function NewsListComponent() {
 		loadData();
 	}, [loadData]);
 
+   //Add a refresh handler
+   const handleRefresh = () => {
+    loadData({ forceRefresh: true })
+  }
+
+  const toggleCategory = (category: string) => {
+    setSelectedCategories((prev) =>
+      prev.includes(category) ? prev.filter((c) => c !== category) : [...prev, category],
+    )
+  }
+
+  const toggleFilter = () => {
+    setIsFilterOpen(!isFilterOpen)
+  }
+
+  const resetFilters = () => {
+    setSelectedCategories([])
+  }
+
+  const filteredNews = news.filter(
+    (item) =>
+      selectedCategories.length === 0 || item.categories.some((category) => selectedCategories.includes(category)),
+  )
+
 	return (
-    <div className="space-y-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {news.map((item) => (
-            <div key={item.id} className="border rounded-lg p-4 shadow-md">
-              <img src={item.image} alt={item.headline} className="w-full h-48 object-cover rounded-md mb-4" />
-              <h2 className="text-lg font-bold mb-2">{item.headline}</h2>
-              <p className="text-sm text-gray-600 mb-2">{item.shortDescription}</p>
-              <div className="text-xs text-gray-500 mb-2">
-                {item.categories.join(", ")} | {new Date(item.date).toLocaleDateString()}
-              </div>
-            </div>
+		<div className="space-y-6">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div className="flex items-center gap-2">
+          <Button variant="outline" onClick={toggleFilter} className="flex items-center gap-2">
+            <Filter className="h-4 w-4" />
+            Filter by Category
+            {isFilterOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+          </Button>
+          {selectedCategories.length > 0 && (
+            <Button variant="ghost" onClick={resetFilters} size="sm">
+              Clear filters
+            </Button>
+          )}
+        </div>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={handleRefresh}
+            disabled={isRefreshing}
+            className={isRefreshing ? "animate-spin" : ""}
+            title="Refresh news"
+          >
+            <RefreshCcw className="h-4 w-4" />
+            <span className="sr-only">Refresh</span>
+          </Button>
+        </div>
+      </div>
+
+      {isFilterOpen && (
+        <div className="flex flex-wrap gap-2 p-4 bg-muted rounded-lg">
+          {allCategories.map((category) => (
+            <Badge
+              key={category}
+              variant={selectedCategories.includes(category) ? "default" : "outline"}
+              className="cursor-pointer"
+              onClick={() => toggleCategory(category)}
+            >
+              {category}
+            </Badge>
           ))}
         </div>
-  );
+      )}
+
+      {filteredNews.length === 0 ? (
+        <div className="text-center py-12">
+          <p className="text-muted-foreground">No news articles match your selected filters.</p>
+          <Button variant="link" onClick={resetFilters}>
+            Clear filters
+          </Button>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredNews.map((item) => (
+            <Card key={item.id} className="overflow-hidden transition-all duration-300 hover:shadow-lg group">
+              <div className="relative h-48 overflow-hidden">
+                <Image
+                  src={item.image || "/placeholder.svg"}
+                  alt={item.headline}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                
+              </div>
+              <CardContent className="p-4 space-y-3">
+                <div className="flex flex-wrap gap-2 mb-2">
+                  {item.categories.map((category) => (
+                    <Badge key={category} variant="secondary" className="text-xs">
+                      {category}
+                    </Badge>
+                  ))}
+                </div>
+                <h2 className="text-xl font-bold line-clamp-2">{item.headline}</h2>
+                <p className="text-muted-foreground text-sm">{item.date}</p>
+                <p className="line-clamp-3">{item.shortDescription}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      )}
+
+      <div className="text-center text-sm text-muted-foreground">
+        <p>
+          Showing {filteredNews.length} of {news.length} articles
+        </p>
+      </div>
+    </div>
+	);
 }
