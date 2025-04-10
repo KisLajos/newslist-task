@@ -216,7 +216,9 @@ export default function NewsListComponent() {
 		return false;
 	};
 
-	
+	if (isLoading) {
+		return <NewsListSkeleton />;
+	}
 
 	if (error) {
 		return (
