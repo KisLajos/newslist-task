@@ -1,7 +1,6 @@
 "use client";
 
-import { fetchNewsData } from "@/utils/api";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect } from "react";
 import { Button } from "./ui/button";
 import { AlertCircle, ChevronDown, Filter, RefreshCcw } from "lucide-react";
 import { Badge } from "./ui/badge";
@@ -11,6 +10,8 @@ import Image from "next/image";
 import { ThemeToggle } from "./theme-toggle";
 import NewsListSkeleton from "./skeleton";
 import { formatDate, getDaysDifference } from "@/utils/date-helpers";
+import { useNewsData } from "@/hooks/use-news-data";
+import { useNewsFilters } from "@/hooks/use-news-filters";
 
 export type NewsItem = {
 	id: number;
@@ -25,125 +26,40 @@ export type NewsItem = {
 const ARTICLES_PER_PAGE = 3;
 
 export default function NewsListComponent() {
-	//State for storing the news articles
-	const [news, setNews] = useState<NewsItem[]>([]);
+	//Use the extracted hook for data fetching
+	const {
+		news,
+		isLoading,
+		isRefreshing,
+		error,
+		lastUpdated,
+		visibleCount,
+		loadData,
+		handleRefresh,
+		loadMore,
+		setVisibleCount,
+	} = useNewsData();
 
-	//State to track initial loading state
-	const [isLoading, setIsLoading] = useState(true);
-
-	//State to track refresh operations
-	const [isRefreshing, setIsRefreshing] = useState(false);
-
-	//State to store any error messages
-	const [error, setError] = useState<string | null>(null);
-
-	//States to manage selected categories for filterdropdown & filtering
-	const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-	const [allCategories, setAllCategories] = useState<string[]>([]);
-	const [isFilterOpen, setIsFilterOpen] = useState(false);
-
-	//State to track the last updated time
-	const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
-
-	const [visibleCount, setVisibleCount] = useState(ARTICLES_PER_PAGE);
-
-	//Function to fetch news data
-	//Using useCallback to memoize the function and prevent unnecessary re-renders
-	const loadData = useCallback(
-		async (options?: { forceRefresh?: boolean }) => {
-			try {
-				//Update loading states
-				if (options?.forceRefresh) {
-					setIsRefreshing(true);
-				} else if (!news.length) {
-					setIsLoading(true);
-				}
-
-				//Clear any previous errors when attempting to load data
-				setError(null);
-
-				//Fetch news data from API
-				const data = await fetchNewsData(options);
-
-				//Sort news by date
-				const sortedNews = [...data].sort(
-					(a, b) =>
-						new Date(b.date).getTime() - new Date(a.date).getTime()
-				);
-				setNews(sortedNews);
-
-				//Extract all unique categories
-				const categories = new Set<string>();
-				sortedNews.forEach((item) => {
-					item.categories.forEach((category) =>
-						categories.add(category)
-					);
-				});
-				setAllCategories(Array.from(categories).sort());
-				setLastUpdated(new Date());
-				//Reset visible count on data change
-				setVisibleCount(ARTICLES_PER_PAGE);
-			} catch (err) {
-				//Handling errors
-				setError("Failed to load news data. Please try again later.");
-				console.error(err);
-			} finally {
-				//Reset loading states
-				setIsLoading(false);
-				setIsRefreshing(false);
-			}
-		},
-		[news.length]
-	);
+	//Use extracted hook for filters
+	const {
+		selectedCategories,
+		allCategories,
+		isFilterOpen,
+		setAllCategories,
+		toggleCategory,
+		toggleFilter,
+		resetFilters,
+		filteredNews,
+		visibleNews,
+		hasMoreArticles,
+	} = useNewsFilters(news, visibleCount, setVisibleCount, ARTICLES_PER_PAGE);
 
 	//Initial data load
 	useEffect(() => {
-		loadData();
-	}, [loadData]);
-
-	//Add a refresh handler
-	const handleRefresh = () => {
-		loadData({ forceRefresh: true });
-	};
-
-	const toggleCategory = (category: string) => {
-		setSelectedCategories((prev) =>
-			prev.includes(category)
-				? prev.filter((c) => c !== category)
-				: [...prev, category]
-		);
-		// Reset visible count when filters change
-		setVisibleCount(ARTICLES_PER_PAGE);
-	};
-
-	const toggleFilter = () => {
-		setIsFilterOpen(!isFilterOpen);
-	};
-
-	const resetFilters = () => {
-		setSelectedCategories([]);
-		// Reset visible count when filters are cleared
-		setVisibleCount(ARTICLES_PER_PAGE);
-	};
-
-	// Function to load more articles
-	const loadMore = () => {
-		setVisibleCount((prev) => prev + ARTICLES_PER_PAGE);
-	};
-
-	const filteredNews = news.filter(
-		(item) =>
-			selectedCategories.length === 0 ||
-			item.categories.some((category) =>
-				selectedCategories.includes(category)
-			)
-	);
-
-	// Get only the visible articles based on current page
-	const visibleNews = filteredNews.slice(0, visibleCount);
-
-	// Check if there are more articles to load
-	const hasMoreArticles = visibleCount < filteredNews.length;
+		loadData().then(({ allCategories: categories }) => {
+			setAllCategories(categories);
+		});
+	}, [loadData, setAllCategories]);
 
 	//Check if an article is published within the last 3 days
 	//Consider articles "new" if they're within 3 days of the most recent article
