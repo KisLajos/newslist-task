@@ -2,16 +2,16 @@
 
 import { useEffect } from "react";
 import { Button } from "./ui/button";
-import { AlertCircle, ChevronDown, Filter, RefreshCcw } from "lucide-react";
-import { Badge } from "./ui/badge";
+import { AlertCircle } from "lucide-react";
 import { Separator } from "./ui/separator";
-import { ThemeToggle } from "./theme-toggle";
 import NewsListSkeleton from "./skeleton";
 import { formatDate, getDaysDifference } from "@/utils/date-helpers";
 import { useNewsData } from "@/hooks/use-news-data";
 import { useNewsFilters } from "@/hooks/use-news-filters";
 import { NewsError } from "./news-error";
 import { NewsGrid } from "./news-grid";
+import { NewsHeader } from "./news-header";
+import { CategoryFilter } from "./category-filter";
 
 export type NewsItem = {
 	id: number;
@@ -87,46 +87,15 @@ export default function NewsListComponent() {
 
 	return (
 		<div className="space-y-6">
-			<div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-				<div className="flex items-center gap-2">
-					<Button
-						variant="outline"
-						onClick={toggleFilter}
-						className="flex items-center gap-2"
-					>
-						<Filter className="h-4 w-4" />
-						Filter by Category
-						{isFilterOpen ? (
-							<ChevronDown className="h-4 w-4 rotate-180 transition-transform" />
-						) : (
-							<ChevronDown className="h-4 w-4 transition-transform" />
-						)}
-					</Button>
-					{selectedCategories.length > 0 && (
-						<Button
-							variant="ghost"
-							onClick={resetFilters}
-							size="sm"
-						>
-							Clear filters
-						</Button>
-					)}
-				</div>
-				<div className="flex items-center gap-2">
-					<Button
-						variant="outline"
-						size="icon"
-						onClick={handleRefresh}
-						disabled={isRefreshing}
-						className={isRefreshing ? "animate-spin" : ""}
-						title="Refresh news"
-					>
-						<RefreshCcw className="h-4 w-4" />
-						<span className="sr-only">Refresh</span>
-					</Button>
-					<ThemeToggle />
-				</div>
-			</div>
+			<NewsHeader
+				onToggleFilter={toggleFilter}
+				onResetFilters={resetFilters}
+				onRefresh={handleRefresh}
+				isFilterOpen={isFilterOpen}
+				hasSelectedFilters={selectedCategories.length > 0}
+				selectedCategories={selectedCategories}
+				isRefreshing={isRefreshing}
+			/>
 
 			{lastUpdated && (
 				<div className="text-xs text-muted-foreground text-right">
@@ -136,22 +105,11 @@ export default function NewsListComponent() {
 			)}
 
 			{isFilterOpen && (
-				<div className="flex flex-wrap gap-2 p-4 bg-muted rounded-lg">
-					{allCategories.map((category) => (
-						<Badge
-							key={category}
-							variant={
-								selectedCategories.includes(category)
-									? "default"
-									: "outline"
-							}
-							className="cursor-pointer"
-							onClick={() => toggleCategory(category)}
-						>
-							{category}
-						</Badge>
-					))}
-				</div>
+				<CategoryFilter
+					categories={allCategories}
+					selectedCategories={selectedCategories}
+					onToggleCategory={toggleCategory}
+				/>
 			)}
 
 			{filteredNews.length === 0 ? (
