@@ -8,7 +8,6 @@ interface NewsHeaderProps {
 	onRefresh: () => void;
 	isFilterOpen: boolean;
 	hasSelectedFilters: boolean;
-	selectedCategories: string[];
 	isRefreshing: boolean;
 }
 
@@ -30,11 +29,11 @@ export function NewsHeader({
 				>
 					<Filter className="h-4 w-4" />
 					Filter by Category
-					{isFilterOpen ? (
-						<ChevronDown className="h-4 w-4 rotate-180 transition-transform" />
-					) : (
-						<ChevronDown className="h-4 w-4 transition-transform" />
-					)}
+					<ChevronDown
+						className={`h-4 w-4 transition-transform ${
+							isFilterOpen ? "rotate-180" : ""
+						}`}
+					/>
 				</Button>
 				{hasSelectedFilters ? (
 					<Button variant="ghost" onClick={onResetFilters} size="sm">
@@ -49,7 +48,6 @@ export function NewsHeader({
 					size="icon"
 					onClick={onRefresh}
 					disabled={isRefreshing}
-					className=""
 					title="Refresh news"
 				>
 					<RefreshCcw
