@@ -19,11 +19,11 @@ export function NewsCard({ item, isNewArticle }: NewsCardProps) {
 					fill
 					className="object-cover transition-transform duration-500 group-hover:scale-105"
 				/>
-				{isNewArticle(item.date) && (
+				{isNewArticle(item.date) ? (
 					<div className="absolute top-2 right-2">
 						<Badge variant="destructive">New</Badge>
 					</div>
-				)}
+				) : null}
 			</div>
 			<CardContent className="p-4 space-y-3 flex-1 flex flex-col">
 				<div className="flex flex-wrap gap-2 mb-2">
