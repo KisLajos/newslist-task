@@ -17,6 +17,57 @@ export type NewsItem = {
 	categories: string[];
 	date: string;
 };
+//Date formatting functions
+function formatDate(
+	dateString: string,
+	formatStyle: "short" | "medium" | "long" = "long"
+): string {
+	const date = new Date(dateString);
+
+	if (formatStyle === "long") {
+		return new Intl.DateTimeFormat("en-US", {
+			year: "numeric",
+			month: "long",
+			day: "numeric",
+		}).format(date);
+	} else if (formatStyle === "medium") {
+		return new Intl.DateTimeFormat("en-US", {
+			year: "numeric",
+			month: "short",
+			day: "numeric",
+			hour: "2-digit",
+			minute: "2-digit",
+		}).format(date);
+	} else {
+		return new Intl.DateTimeFormat("en-US", {
+			year: "numeric",
+			month: "short",
+			day: "numeric",
+		}).format(date);
+	}
+}
+
+//Calculate days difference
+function getDaysDifference(dateString: string): number {
+	const date = new Date(dateString);
+	const today = new Date();
+
+	//Reset time part for accuracy
+	const dateWithoutTime = new Date(
+		date.getFullYear(),
+		date.getMonth(),
+		date.getDate()
+	);
+	const todayWithoutTime = new Date(
+		today.getFullYear(),
+		today.getMonth(),
+		today.getDate()
+	);
+
+	//Calculate in milliseconds and convert to days
+	const diffTime = todayWithoutTime.getTime() - dateWithoutTime.getTime();
+	return Math.floor(diffTime / (1000 * 60 * 60 * 24));
+}
 
 export default function NewsListComponent() {
 	//State for storing the news articles
