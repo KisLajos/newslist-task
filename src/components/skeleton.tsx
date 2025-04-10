@@ -21,7 +21,7 @@ function NewsListSkeleton() {
 
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 				{Array.from({ length: ARTICLES_PER_PAGE }).map((_, index) => (
-					<Card key={index} className="overflow-hidden">
+					<Card key={index} className="py-0 overflow-hidden">
 						<Skeleton className="h-48 w-full" />
 						<CardContent className="p-4 space-y-3">
 							<div className="flex gap-2">
