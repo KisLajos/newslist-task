@@ -1,5 +1,6 @@
 import { AlertCircle, RefreshCcw } from "lucide-react";
 import { Button } from "./ui/button";
+import { motion } from "framer-motion";
 
 interface NewsErrorProps {
 	message: string;
@@ -8,7 +9,11 @@ interface NewsErrorProps {
 
 export function NewsError({ message, onRetry }: NewsErrorProps) {
 	return (
-		<div className="my-8 rounded-lg border border-destructive p-4 text-destructive">
+		<motion.div
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			className="my-8 rounded-lg border border-destructive p-4 text-destructive"
+		>
 			<div className="flex items-center gap-2 font-medium">
 				<AlertCircle className="h-5 w-5" />
 				Error
@@ -24,6 +29,6 @@ export function NewsError({ message, onRetry }: NewsErrorProps) {
 					Try Again
 				</Button>
 			</div>
-		</div>
+		</motion.div>
 	);
 }
