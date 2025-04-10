@@ -11,7 +11,7 @@ interface NewsCardProps {
 
 export function NewsCard({ item, isNewArticle }: NewsCardProps) {
 	return (
-		<Card className="py-0 overflow-hidden group flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+		<Card className="py-0 min-h-[27rem] overflow-hidden group flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
 			<div className="relative h-48 overflow-hidden">
 				<Image
 					src={item.image || "/placeholder.svg"}
