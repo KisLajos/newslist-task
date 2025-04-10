@@ -33,10 +33,11 @@ export default function RootLayout({
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} ${roboto.variable} antialiased`}
 			>
+				 {/* Enables dark/light mode switching */}
 				<ThemeProvider
-					attribute="class"
-					defaultTheme="system"
-					enableSystem
+					attribute="class" //applies theme via CSS classes
+					defaultTheme="system" //uses OS preference initially
+					enableSystem //continues to respond to OS preference changes
 				>
 					{children}
 				</ThemeProvider>

@@ -12,12 +12,12 @@ export function CategoryFilter({
 	selectedCategories,
 	onToggleCategory,
 }: CategoryFilterProps) {
-	// No categories to display
+	//No categories to display
 	if (categories.length === 0) {
 		return null;
 	}
 
-	// Animation variants for container and items
+	//Animation variants for container and items
 	const containerVariants = {
 		hidden: { opacity: 0, height: 0 },
 		visible: {
@@ -39,6 +39,7 @@ export function CategoryFilter({
 		},
 	};
 
+	//Animation configuration for individual category badges
 	const badgeVariants = {
 		hidden: { opacity: 0, scale: 0.8 },
 		visible: {
@@ -67,13 +68,14 @@ export function CategoryFilter({
 			exit="exit"
 			className="flex flex-wrap gap-2 p-4 bg-muted rounded-lg justify-evenly overflow-hidden"
 		>
+			{/* AnimatePresence handles animations when categories are added/removed */}
 			<AnimatePresence>
 				{categories.map((category, index) => (
 					<motion.div
 						key={category}
 						variants={badgeVariants}
-						custom={index}
-						layout
+						custom={index} //Pass index to variants for custom delays
+						layout //Smooth layout transitions
 					>
 						<Badge
 							variant={
