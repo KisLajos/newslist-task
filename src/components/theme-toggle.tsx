@@ -14,19 +14,19 @@ export function ThemeToggle() {
 		setMounted(true);
 	}, []);
 
-    //Render a placeholder with the same dimensions during SSR
-    //to prevent hydration mismatch
+	//Render a placeholder with the same dimensions during SSR
+	//to prevent hydration mismatch
 	if (!mounted) {
 		return (
-            <Button
-              variant="outline"
-              size="icon"
-              disabled
-              aria-label="Loading theme toggle"
-            >
-              <div className="h-[1.2rem] w-[1.2rem]" />
-            </Button>
-          );
+			<Button
+				variant="outline"
+				size="icon"
+				disabled
+				aria-label="Loading theme toggle"
+			>
+				<div className="h-[1.2rem] w-[1.2rem]" />
+			</Button>
+		);
 	}
 
 	function toggleTheme() {
