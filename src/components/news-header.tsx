@@ -51,7 +51,11 @@ export function NewsHeader({
 					className=""
 					title="Refresh news"
 				>
-					<RefreshCcw className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`} />
+					<RefreshCcw
+						className={`h-4 w-4 ${
+							isRefreshing ? "animate-spin" : ""
+						}`}
+					/>
 					<span className="sr-only">Refresh</span>
 				</Button>
 				<ThemeToggle />
