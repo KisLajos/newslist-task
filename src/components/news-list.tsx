@@ -94,7 +94,6 @@ export default function NewsListComponent() {
 				onRefresh={handleRefresh}
 				isFilterOpen={isFilterOpen}
 				hasSelectedFilters={selectedCategories.length > 0}
-				selectedCategories={selectedCategories}
 				isRefreshing={isRefreshing}
 			/>
 
