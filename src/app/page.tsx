@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function Home() {
 	return (
-		<main className="container mx-auto px-4 py-8">
+		<main className="container mx-auto px-4 py-8 font-roboto">
 			<h1 className="text-3xl font-bold mb-4 text-center">Latest News</h1>
 			<p className="text-center text-muted-foreground mb-8 max-w-2xl mx-auto">
 				Stay informed with our curated collection of news articles.
