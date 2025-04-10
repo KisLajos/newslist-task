@@ -12,6 +12,7 @@ import { CategoryFilter } from "./category-filter";
 import { NoMatchingNews, NoNewsAvailable } from "./empty-states";
 import { NewsFooter } from "./news-footer";
 import LastUpdated from "./last-updated";
+import { ScrollToTop } from "./scroll-to-top";
 
 export type NewsItem = {
 	id: number;
@@ -126,6 +127,7 @@ export default function NewsListComponent() {
 				visibleCount={visibleNews.length}
 				totalCount={filteredNews.length}
 			/>
+			<ScrollToTop />
 		</div>
 	);
 }
