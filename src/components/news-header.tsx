@@ -21,7 +21,7 @@ export function NewsHeader({
 	isRefreshing,
 }: NewsHeaderProps) {
 	return (
-		<div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+		<div className="flex flex-row justify-between items-start sm:items-center gap-4">
 			<div className="flex items-center gap-2">
 				<Button
 					variant="outline"
@@ -48,10 +48,10 @@ export function NewsHeader({
 					size="icon"
 					onClick={onRefresh}
 					disabled={isRefreshing}
-					className={isRefreshing ? "animate-spin" : ""}
+					className=""
 					title="Refresh news"
 				>
-					<RefreshCcw className="h-4 w-4" />
+					<RefreshCcw className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`} />
 					<span className="sr-only">Refresh</span>
 				</Button>
 				<ThemeToggle />
