@@ -4,15 +4,14 @@ import { useEffect } from "react";
 import { Button } from "./ui/button";
 import { AlertCircle, ChevronDown, Filter, RefreshCcw } from "lucide-react";
 import { Badge } from "./ui/badge";
-import { Card, CardContent } from "./ui/card";
 import { Separator } from "./ui/separator";
-import Image from "next/image";
 import { ThemeToggle } from "./theme-toggle";
 import NewsListSkeleton from "./skeleton";
 import { formatDate, getDaysDifference } from "@/utils/date-helpers";
 import { useNewsData } from "@/hooks/use-news-data";
 import { useNewsFilters } from "@/hooks/use-news-filters";
 import { NewsError } from "./news-error";
+import { NewsGrid } from "./news-grid";
 
 export type NewsItem = {
 	id: number;
@@ -165,66 +164,12 @@ export default function NewsListComponent() {
 					</Button>
 				</div>
 			) : (
-				<>
-					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-						{visibleNews.map((item) => (
-							<Card
-								key={item.id}
-								className="overflow-hidden transition-all duration-300 hover:shadow-lg group"
-							>
-								<div className="relative h-48 overflow-hidden">
-									<Image
-										src={item.image || "/placeholder.svg"}
-										alt={item.headline}
-										fill
-										className="object-cover transition-transform duration-500 group-hover:scale-105"
-									/>
-									{isNewArticle(item.date) && (
-										<div className="absolute top-2 right-2">
-											<Badge variant="destructive">
-												New
-											</Badge>
-										</div>
-									)}
-								</div>
-								<CardContent className="p-4 space-y-3 flex-1 flex flex-col">
-									<div className="flex flex-wrap gap-2 mb-2">
-										{item.categories.map((category) => (
-											<Badge
-												key={category}
-												variant="secondary"
-												className="text-xs"
-											>
-												{category}
-											</Badge>
-										))}
-									</div>
-									<h2 className="text-xl font-bold line-clamp-2 min-h-[3.5rem]">
-										{item.headline}
-									</h2>
-									<p className="text-muted-foreground text-sm">
-										{formatDate(item.date)}
-									</p>
-									<p className="line-clamp-3 flex-1">
-										{item.shortDescription}
-									</p>
-								</CardContent>
-							</Card>
-						))}
-					</div>
-
-					{hasMoreArticles && (
-						<div className="flex justify-center mt-8">
-							<Button
-								onClick={loadMore}
-								variant="outline"
-								className="flex items-center gap-2"
-							>
-								Load More <ChevronDown className="h-4 w-4" />
-							</Button>
-						</div>
-					)}
-				</>
+				<NewsGrid
+					news={visibleNews}
+					isNewArticle={isNewArticle}
+					hasMoreArticles={hasMoreArticles}
+					onLoadMore={loadMore}
+				/>
 			)}
 
 			{!isLoading && !error && news.length === 0 && (
