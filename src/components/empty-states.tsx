@@ -1,5 +1,5 @@
 import { Button } from "./ui/button";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Trash } from "lucide-react";
 
 interface NoMatchingNewsProps {
 	onResetFilters: () => void;
@@ -12,6 +12,7 @@ export function NoMatchingNews({ onResetFilters }: NoMatchingNewsProps) {
 				No news articles match your selected filters.
 			</p>
 			<Button variant="link" onClick={onResetFilters}>
+				<Trash className="h-4 w-4" />
 				Clear filters
 			</Button>
 		</div>

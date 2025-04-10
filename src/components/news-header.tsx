@@ -1,5 +1,5 @@
 import { Button } from "./ui/button";
-import { Filter, ChevronDown, RefreshCcw } from "lucide-react";
+import { Filter, ChevronDown, RefreshCcw, Trash } from "lucide-react";
 import { ThemeToggle } from "./theme-toggle";
 
 interface NewsHeaderProps {
@@ -38,6 +38,7 @@ export function NewsHeader({
 				</Button>
 				{hasSelectedFilters ? (
 					<Button variant="ghost" onClick={onResetFilters} size="sm">
+						<Trash className="h-4 w-4" />
 						Clear filters
 					</Button>
 				) : null}
