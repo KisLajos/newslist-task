@@ -11,7 +11,8 @@ export function NewsFooter({ visibleCount, totalCount }: NewsFooterProps) {
 			<Separator />
 			<div className="text-center text-sm text-muted-foreground">
 				<p>
-					Showing {visibleCount} of {totalCount} articles
+					Showing {visibleCount} of {totalCount}{" "}
+					{totalCount === 1 ? "article" : "articles"}
 				</p>
 			</div>
 		</>

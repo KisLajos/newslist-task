@@ -23,7 +23,7 @@ export function useNewsData() {
 	const [visibleCount, setVisibleCount] = useState(ARTICLES_PER_PAGE);
 
 	//Function to fetch news data
-    //Using useCallback to memoize the function and prevent unnecessary re-renders
+	//Using useCallback to memoize the function and prevent unnecessary re-renders
 	const loadData = useCallback(
 		async (options?: { forceRefresh?: boolean }) => {
 			try {
@@ -75,7 +75,7 @@ export function useNewsData() {
 				setIsRefreshing(false);
 			}
 		},
-		[news.length]
+		[]
 	);
 
 	//Refresh handler

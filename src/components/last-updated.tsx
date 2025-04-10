@@ -1,5 +1,4 @@
 import { formatDate } from "@/utils/date-helpers";
-import React from "react";
 
 function LastUpdated({ date }: { date: Date }) {
 	return (
