@@ -1,9 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import { Button } from "./ui/button";
-import { AlertCircle } from "lucide-react";
-import { Separator } from "./ui/separator";
 import NewsListSkeleton from "./skeleton";
 import { formatDate, getDaysDifference } from "@/utils/date-helpers";
 import { useNewsData } from "@/hooks/use-news-data";
@@ -12,6 +9,8 @@ import { NewsError } from "./news-error";
 import { NewsGrid } from "./news-grid";
 import { NewsHeader } from "./news-header";
 import { CategoryFilter } from "./category-filter";
+import { NoMatchingNews, NoNewsAvailable } from "./empty-states";
+import { NewsFooter } from "./news-footer";
 
 export type NewsItem = {
 	id: number;
@@ -113,14 +112,7 @@ export default function NewsListComponent() {
 			)}
 
 			{filteredNews.length === 0 ? (
-				<div className="text-center py-12">
-					<p className="text-muted-foreground">
-						No news articles match your selected filters.
-					</p>
-					<Button variant="link" onClick={resetFilters}>
-						Clear filters
-					</Button>
-				</div>
+				<NoMatchingNews onResetFilters={resetFilters} />
 			) : (
 				<NewsGrid
 					news={visibleNews}
@@ -131,31 +123,13 @@ export default function NewsListComponent() {
 			)}
 
 			{!isLoading && !error && news.length === 0 && (
-				<div className="flex flex-col items-center justify-center py-12 text-center">
-					<AlertCircle className="h-12 w-12 text-muted-foreground mb-4" />
-					<h3 className="text-lg font-medium">
-						No news articles available
-					</h3>
-					<p className="text-muted-foreground mt-2">
-						There are currently no news articles to display.
-					</p>
-					<Button
-						onClick={handleRefresh}
-						variant="outline"
-						className="mt-4"
-					>
-						Refresh
-					</Button>
-				</div>
+				<NoNewsAvailable onRefresh={handleRefresh} />
 			)}
 
-			<Separator />
-
-			<div className="text-center text-sm text-muted-foreground">
-				<p>
-					Showing {visibleNews.length} of {news.length} articles
-				</p>
-			</div>
+			<NewsFooter
+				visibleCount={visibleNews.length}
+				totalCount={filteredNews.length}
+			/>
 		</div>
 	);
 }
