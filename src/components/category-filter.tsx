@@ -12,7 +12,7 @@ export function CategoryFilter({
 	onToggleCategory,
 }: CategoryFilterProps) {
 	return (
-		<div className="flex flex-wrap gap-2 p-4 bg-muted rounded-lg space-evenly">
+		<div className="flex flex-wrap gap-2 p-4 bg-muted rounded-lg justify-evenly">
 			{categories.map((category) => (
 				<Badge
 					key={category}
