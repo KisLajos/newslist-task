@@ -12,6 +12,7 @@ import NewsListSkeleton from "./skeleton";
 import { formatDate, getDaysDifference } from "@/utils/date-helpers";
 import { useNewsData } from "@/hooks/use-news-data";
 import { useNewsFilters } from "@/hooks/use-news-filters";
+import { NewsError } from "./news-error";
 
 export type NewsItem = {
 	id: number;
@@ -82,25 +83,7 @@ export default function NewsListComponent() {
 	}
 
 	if (error) {
-		return (
-			<div className="my-8 rounded-lg border border-destructive p-4 text-destructive">
-				<div className="flex items-center gap-2 font-medium">
-					<AlertCircle className="h-5 w-5" />
-					Error
-				</div>
-				<div className="mt-2 flex flex-col gap-4">
-					<p>{error}</p>
-					<Button
-						onClick={() => loadData()}
-						variant="outline"
-						className="w-fit flex items-center gap-2"
-					>
-						<RefreshCcw className="h-4 w-4" />
-						Try Again
-					</Button>
-				</div>
-			</div>
-		);
+		return <NewsError message={error} onRetry={() => loadData()} />;
 	}
 
 	return (
