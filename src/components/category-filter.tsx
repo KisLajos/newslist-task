@@ -12,7 +12,7 @@ export function CategoryFilter({
 	onToggleCategory,
 }: CategoryFilterProps) {
 	return (
-		<div className="flex flex-wrap gap-2 p-4 bg-muted rounded-lg">
+		<div className="flex flex-wrap gap-2 p-4 bg-muted rounded-lg space-evenly">
 			{categories.map((category) => (
 				<Badge
 					key={category}
@@ -21,7 +21,7 @@ export function CategoryFilter({
 							? "default"
 							: "outline"
 					}
-					className="cursor-pointer"
+					className="animate-in fade-in duration-300 cursor-pointer"
 					onClick={() => onToggleCategory(category)}
 				>
 					{category}
