@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import NewsListSkeleton from "./skeleton";
-import { formatDate, getDaysDifference } from "@/utils/date-helpers";
+import { getDaysDifference } from "@/utils/date-helpers";
 import { useNewsData } from "@/hooks/use-news-data";
 import { useNewsFilters } from "@/hooks/use-news-filters";
 import { NewsError } from "./news-error";
@@ -11,6 +11,7 @@ import { NewsHeader } from "./news-header";
 import { CategoryFilter } from "./category-filter";
 import { NoMatchingNews, NoNewsAvailable } from "./empty-states";
 import { NewsFooter } from "./news-footer";
+import LastUpdated from "./last-updated";
 
 export type NewsItem = {
 	id: number;
@@ -96,12 +97,7 @@ export default function NewsListComponent() {
 				isRefreshing={isRefreshing}
 			/>
 
-			{lastUpdated && (
-				<div className="text-xs text-muted-foreground text-right">
-					Last updated:{" "}
-					{formatDate(lastUpdated.toISOString(), "medium")}
-				</div>
-			)}
+			{lastUpdated && <LastUpdated date={lastUpdated} />}
 
 			{isFilterOpen && (
 				<CategoryFilter
