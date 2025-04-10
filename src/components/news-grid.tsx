@@ -28,7 +28,7 @@ export function NewsGrid({
 				))}
 			</div>
 
-			{hasMoreArticles && (
+			{hasMoreArticles ? (
 				<div className="flex justify-center mt-8">
 					<Button
 						onClick={onLoadMore}
@@ -38,7 +38,7 @@ export function NewsGrid({
 						Load More <ChevronDown className="h-4 w-4" />
 					</Button>
 				</div>
-			)}
+			) : null}
 		</>
 	);
 }

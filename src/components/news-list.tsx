@@ -97,15 +97,15 @@ export default function NewsListComponent() {
 				isRefreshing={isRefreshing}
 			/>
 
-			{lastUpdated && <LastUpdated date={lastUpdated} />}
+			{lastUpdated ? <LastUpdated date={lastUpdated} /> : null}
 
-			{isFilterOpen && (
+			{isFilterOpen ? (
 				<CategoryFilter
 					categories={allCategories}
 					selectedCategories={selectedCategories}
 					onToggleCategory={toggleCategory}
 				/>
-			)}
+			) : null}
 
 			{filteredNews.length === 0 ? (
 				<NoMatchingNews onResetFilters={resetFilters} />
@@ -118,9 +118,9 @@ export default function NewsListComponent() {
 				/>
 			)}
 
-			{!isLoading && !error && news.length === 0 && (
+			{!isLoading && !error && news.length === 0 ? (
 				<NoNewsAvailable onRefresh={handleRefresh} />
-			)}
+			) : null}
 
 			<NewsFooter
 				visibleCount={visibleNews.length}

@@ -36,11 +36,11 @@ export function NewsHeader({
 						<ChevronDown className="h-4 w-4 transition-transform" />
 					)}
 				</Button>
-				{hasSelectedFilters && (
+				{hasSelectedFilters ? (
 					<Button variant="ghost" onClick={onResetFilters} size="sm">
 						Clear filters
 					</Button>
-				)}
+				) : null}
 			</div>
 			<div className="flex items-center gap-2">
 				<Button
